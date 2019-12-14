@@ -51,12 +51,13 @@ def game_loop():
     font = pygame.font.SysFont(None, 55)
     exit_game = False
     game_over = False
-    snake_x = 45
-    snake_y = 55
+    snake_x = random.randint(0, screen_width)
+    snake_y = random.randint(0, screen_height)
     size = 30
     fps = 30
     velocity_x = 0
     velocity_y = 0
+    k = 0 # stop from revese moving direction
 
     food_x = random.randint(10, screen_width-20)
     food_y = random.randint(10, screen_height-20)
@@ -87,21 +88,30 @@ def game_loop():
                     exit_game = True
 
                 if event.type == pygame.KEYDOWN:#press any key
-                    if event.key == pygame.K_RIGHT:
+                    if event.key == pygame.K_RIGHT and k != 2:
                         velocity_x = 10
                         velocity_y = 0
+                        if len(snake_list) > 1:
+                            k = 1
+                        
 
-                    if event.key == pygame.K_LEFT:
+                    if event.key == pygame.K_LEFT and k != 1:
                         velocity_x = -10
                         velocity_y = 0
+                        if len(snake_list) > 1:
+                            k = 2
 
-                    if event.key == pygame.K_DOWN:
+                    if event.key == pygame.K_DOWN and k!=4:
                         velocity_y = 10
                         velocity_x = 0
+                        if len(snake_list) > 1:
+                            k = 3
 
-                    if event.key == pygame.K_UP:
+                    if event.key == pygame.K_UP and k != 3:
                         velocity_y = -10
                         velocity_x = 0
+                        if len(snake_list) > 1:
+                            k = 4
 
             snake_x += velocity_x
             snake_y += velocity_y
