@@ -115,13 +115,14 @@ def game_loop():
 
             snake_x += velocity_x
             snake_y += velocity_y
-
-            if abs(snake_x - food_x) < 10 and abs(snake_y - food_y) < 10:
+            
+            #wo logic food not eating glitch fixed
+            if ((k in [0,3,4]) and abs(snake_x + 15 - food_x) < 7 and abs(snake_y - food_y) < 7) or ((k in [0,1,2]) and abs(snake_x + 15 - food_x) < 7 and abs(snake_y + 15 - food_y) < 7):
                 score += 1
                 print('Score: ' + str(score))
                 food_x = random.randint(10, screen_width-20)
                 food_y = random.randint(10, screen_height-20)
-                snake_lenght += 5 
+                snake_lenght += 2 
 
 
             game_window.fill(white)
