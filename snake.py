@@ -34,6 +34,12 @@ red = (200,0,0)
 black = (0,0,0)
 
 clock = pygame.time.Clock()
+
+def plot_snake(game_window, color, snake_list, size):
+    for x,y in snake_list:
+        pygame.draw.rect(game_window, color, [x,y,size,size])
+
+
 #game loop
 while not exit_game:
     for event in pygame.event.get():
@@ -77,7 +83,8 @@ while not exit_game:
     head.append(snake_y)
     snake_list.append(head)
 
-    pygame.draw.rect(game_window, black, [snake_x, snake_y, size, size])
+    #pygame.draw.rect(game_window, black, [snake_x, snake_y, size, size])
+    plot_snake(game_window, black, snake_list, size)
     pygame.display.update()
     clock.tick(fps)
 
