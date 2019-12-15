@@ -36,6 +36,11 @@ black = (0,0,0)
 
 clock = pygame.time.Clock()
 
+def increment_score(score, snake_lenght):
+    score += 1
+    snake_lenght += 2
+    return score, snake_lenght
+
 def text_screen(text, color, x, y):
     screen_text = font.render(text, True, color)
     game_window.blit(screen_text, [x,y])
@@ -49,6 +54,7 @@ def plot_snake(game_window, color, snake_list, size):
 def game_loop():
     #Game variables
     font = pygame.font.SysFont(None, 55)
+    diff = 12
     exit_game = False
     game_over = False
     snake_x = random.randint(0, screen_width)
@@ -117,12 +123,36 @@ def game_loop():
             snake_y += velocity_y
             
             #wo logic food not eating glitch fixed
-            if ((k in [0,3,4]) and abs(snake_x + 15 - food_x) < 7 and abs(snake_y - food_y) < 7) or ((k in [0,1,2]) and abs(snake_x + 15 - food_x) < 7 and abs(snake_y + 15 - food_y) < 7):
-                score += 1
+            #if ((k in [0,3,4]) and abs(snake_x + 15 - food_x) < 7 and abs(snake_y - food_y) < 7) or ((k in [0,1,2]) and abs(snake_x + 15 - food_x) < 7 and abs(snake_y - food_y) < 7):
+
+            #bug fix update
+            # for up direction
+            if (k in [0,4]) and (abs(snake_x + 15 - food_x) < diff and abs(snake_y - food_y) < diff):
+                score, snake_lenght = increment_score(score, snake_lenght) 
                 print('Score: ' + str(score))
                 food_x = random.randint(10, screen_width-20)
                 food_y = random.randint(10, screen_height-20)
-                snake_lenght += 2 
+
+            # for down direction
+            if (k in [0,3]) and (abs(snake_x - food_x + 15) < diff and abs(snake_y - food_y + 15) < diff):
+                score, snake_lenght = increment_score(score, snake_lenght)    
+                print('Score: ' + str(score))
+                food_x = random.randint(10, screen_width-20)
+                food_y = random.randint(10, screen_height-20)
+
+            # for left direction
+            if (k in [0,2]) and (abs(snake_x - food_x) < diff and abs(snake_y - food_y + 15) < diff):
+                score, snake_lenght = increment_score(score, snake_lenght)
+                print('Score: ' + str(score))
+                food_x = random.randint(10, screen_width-20)
+                food_y = random.randint(10, screen_height-20)
+
+            # for right direction
+            if (k in [0,1]) and (abs(snake_x - food_x + 15) < diff and abs(snake_y - food_y + 15) < diff):
+                score, snake_lenght = increment_score(score, snake_lenght)
+                print('Score: ' + str(score))
+                food_x = random.randint(10, screen_width-20)
+                food_y = random.randint(10, screen_height-20)
 
 
             game_window.fill(white)
